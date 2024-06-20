@@ -73,6 +73,7 @@ function gameBoardCreator() {
 }
 
 function playerCreator(type = "CPU") {
+  // type is either "CPU" or "human". Let's just use CPU for default. don't know lol
   return {
     type,
     gameBoard: gameBoardCreator(),
