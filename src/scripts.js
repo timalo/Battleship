@@ -1,8 +1,11 @@
-function shipCreator(length) {
+function shipCreator(xStart, yStart, length, direction) {
   return {
+    xStart,
+    yStart,
     length,
     hp: length,
     isSunk: false,
+    direction,
     hit() {
       this.hp -= 1;
       this.checkSunk();
@@ -64,7 +67,7 @@ function gameBoardCreator() {
           }
         }
         // If gotten this far, ship should be good to place.
-        const ship = shipCreator(shipSize);
+        const ship = shipCreator(xCoord, yCoord, shipSize, direction);
         for (let i = 0; i < shipSize; i += 1) {
           if (direction === "x") {
             board[yCoord][xCoord + i] = ship;
@@ -94,10 +97,18 @@ function gameBoardCreator() {
       }
       if (typeof board[yCoord][xCoord] === "object") {
         board[yCoord][xCoord].hit();
-        this.markAdjacents(xCoord, yCoord);
+        this.markHitAdjacents(xCoord, yCoord);
+        if (board[yCoord][xCoord].isSunk === true) {
+          // Mark all the adjacents for ship if it was sunk
+          this.markAllAdjacents(
+            board[yCoord][xCoord].xStart,
+            board[yCoord][xCoord].yStart,
+            board[yCoord][xCoord].length,
+            board[yCoord][xCoord].direction,
+          );
+        }
         this.checkIfAllSunk();
         board[yCoord][xCoord] = "x";
-        return true;
       }
       return false; // should never get here. This is just to shut up eslint.
     },
@@ -111,7 +122,10 @@ function gameBoardCreator() {
       }
       return true;
     },
-    markAdjacents(xCoord, yCoord) {
+    markHitAdjacents(xCoord, yCoord) {
+      // This func takes care of marking the adjacent squares on a SINGLE hit.
+      // There will be another func that marks all adjacents for a single ship.
+      // It's required for longer ships when we want to mark adjacents for square that was not hit on the same turn as the ship sinks.
       for (let i = -1; i <= 1; i += 1) {
         for (let j = -1; j <= 1; j += 1) {
           if (
@@ -132,6 +146,49 @@ function gameBoardCreator() {
                 board[yCoord + i][xCoord + j] = "a";
               } else if (board[yCoord][xCoord].isSunk === true) {
                 board[yCoord + i][xCoord + j] = "a";
+              }
+            }
+          }
+        }
+      }
+    },
+    markAllAdjacents(xCoord, yCoord, length, direction) {
+      // Marks all the adjacent squares of a ship that was sunk.
+      // This is required for ships that are longer than 1.
+      for (let i = 0; i < length; i += 1) {
+        if (direction === "x") {
+          for (let j = -1; j <= 1; j += 1) {
+            for (let k = -1; k <= 1; k += 1) {
+              if (
+                yCoord + j >= 0 &&
+                yCoord + j <= 9 &&
+                xCoord + k + i >= 0 &&
+                xCoord + k + i <= 9
+              ) {
+                if (
+                  board[yCoord + j][xCoord + k + i] === undefined ||
+                  board[yCoord + j][xCoord + k + i] === "o"
+                ) {
+                  board[yCoord + j][xCoord + k + i] = "a";
+                }
+              }
+            }
+          }
+        } else {
+          for (let j = -1; j <= 1; j += 1) {
+            for (let k = -1; k <= 1; k += 1) {
+              if (
+                yCoord + j + i >= 0 &&
+                yCoord + j + i <= 9 &&
+                xCoord + k >= 0 &&
+                xCoord + k <= 9
+              ) {
+                if (
+                  board[yCoord + j + i][xCoord + k] === undefined ||
+                  board[yCoord + j + i][xCoord + k] === "o"
+                ) {
+                  board[yCoord + j + i][xCoord + k] = "a";
+                }
               }
             }
           }

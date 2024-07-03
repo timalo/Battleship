@@ -1,4 +1,4 @@
-const script = require("./scripts");
+// const script = require("./scripts");
 const main = require("./main");
 
 function init() {

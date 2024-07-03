@@ -1,11 +1,11 @@
 const script = require("./scripts");
 
 test("shipCreator returns an object", () => {
-  expect(typeof script.shipCreator(4)).toBe("object");
+  expect(typeof script.shipCreator(5, 6, 4, "y")).toBe("object");
 });
 
 test("ship sinks after number of hits equal to length", () => {
-  const ship = script.shipCreator(4);
+  const ship = script.shipCreator(2, 2, 4, "y");
   ship.hit();
   ship.hit();
   ship.hit();
@@ -130,7 +130,7 @@ test("Adjacents marked correctly on a ship with a size of 2 in the middle", () =
   expect(gameBoard.board[1][4]).toBe(undefined);
 });
 
-test("Destroying a middle part of ship last", () => {
+test("Destroying a middle part of a ship last", () => {
   const gameBoard = script.gameBoardCreator();
   gameBoard.placeShip(2, 5, 5, "x");
   gameBoard.placeShip(4, 2, 3, "y");
@@ -155,5 +155,18 @@ test("Destroying a middle part of ship last", () => {
   expect(gameBoard.board[6][3]).toBe("a");
   gameBoard.receiveAttack(2, 4);
   expect(gameBoard.board[4][2]).toBe("x");
-  expect(gameBoard.board[4][2]).isSunk.toBe(true);
+  expect(gameBoard.board[2][1]).toBe("a");
+  expect(gameBoard.board[2][2]).toBe("a");
+  expect(gameBoard.board[2][3]).toBe("a");
+  expect(gameBoard.board[3][1]).toBe("a");
+  expect(gameBoard.board[3][3]).toBe("a");
+  expect(gameBoard.board[4][1]).toBe("a");
+  expect(gameBoard.board[4][3]).toBe("a");
+  expect(gameBoard.board[5][1]).toBe("a");
+  expect(gameBoard.board[5][3]).toBe("a");
+  expect(gameBoard.board[6][1]).toBe("a");
+  expect(gameBoard.board[6][3]).toBe("a");
+  expect(gameBoard.board[7][1]).toBe("a");
+  expect(gameBoard.board[7][2]).toBe("a");
+  expect(gameBoard.board[7][3]).toBe("a");
 });

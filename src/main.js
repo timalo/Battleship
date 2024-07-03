@@ -33,6 +33,8 @@ window.onload = () => {
   DOMHandler.renderBoards(player1, player2);
 };
 
-function hitShip() {}
+function hitShip(boardID, x, y) {
+  console.log(`Hit ${boardID} at ${x}, ${y}`);
+}
 
-export default { hitShip }; // export all funcs later so we can test them.
+export default hitShip;
