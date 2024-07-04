@@ -1,27 +1,5 @@
+// const main = require("./main");
 // const script = require("./scripts");
-const main = require("./main");
-
-function init() {
-  // This initializes the gameboard boxes and gives them classes and id's on page load.
-  const gameBoard1 = document.getElementsByClassName("board1")[0];
-  const gameBoard2 = document.getElementsByClassName("board2")[0];
-  for (let i = 0; i < 10; i += 1) {
-    for (let j = 0; j < 10; j += 1) {
-      const box1 = document.createElement("div");
-      box1.classList.add("box");
-      box1.classList.add("unhit");
-      box1.id = `box1-${i}${j}`;
-      box1.onclick = () => main.hitShip(1, i, j);
-      gameBoard1.appendChild(box1);
-      const box2 = document.createElement("div");
-      box2.classList.add("box");
-      box2.classList.add("unhit");
-      box2.id = `box2-${i}${j}`;
-      box2.onclick = () => main.hitShip(2, i, j);
-      gameBoard2.appendChild(box2);
-    }
-  }
-}
 
 function renderBoards(player1, player2) {
   // In addition to handling classes etc. We could also add images to hit/missed boxes.
@@ -68,4 +46,4 @@ function renderBoards(player1, player2) {
   }
 }
 
-module.exports = { init, renderBoards }; // eslint complains about this when exporting just one function. There are more funcs coming
+module.exports = { renderBoards }; // eslint complains about this when exporting just one function. There are more funcs coming
