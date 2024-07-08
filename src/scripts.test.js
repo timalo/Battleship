@@ -130,7 +130,7 @@ test("Adjacents marked correctly on a ship with a size of 2 in the middle", () =
   expect(gameBoard.board[1][4]).toBe(undefined);
 });
 
-test("Destroying a middle part of a ship last", () => {
+test("A bit trickier. Destroying a middle part of a ship last", () => {
   const gameBoard = script.gameBoardCreator();
   gameBoard.placeShip(2, 5, 5, "x");
   gameBoard.placeShip(4, 2, 3, "y");

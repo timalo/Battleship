@@ -4,8 +4,8 @@ const DOMHandler = require("./DOMHandler");
 const script = require("./scripts");
 
 window.onload = () => {
-  const gameBoard1 = document.getElementsByClassName("board1")[0];
-  const gameBoard2 = document.getElementsByClassName("board2")[0];
+  /*   const gameBoard1 = document.getElementsByClassName("board1")[0];
+  const gameBoard2 = document.getElementsByClassName("board2")[0]; */
   const player1 = script.playerCreator("human");
   // just placing these manually for now. Will be done by the user later.
   player1.gameBoard.placeShip(4, 1, 4, "y"); // ends in 1, 8
@@ -30,7 +30,13 @@ window.onload = () => {
   player2.gameBoard.placeShip(1, 9, 8, "y");
   player2.gameBoard.placeShip(1, 0, 0, "x");
   player2.gameBoard.placeShip(1, 0, 2, "x");
+  init(player1, player2);
+  DOMHandler.renderBoards(player1, player2);
+};
 
+function init(player1, player2) {
+  const gameBoard1 = document.getElementsByClassName("board1")[0];
+  const gameBoard2 = document.getElementsByClassName("board2")[0];
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {
       const box1 = document.createElement("div");
@@ -47,8 +53,7 @@ window.onload = () => {
       gameBoard2.appendChild(box2);
     }
   }
-  DOMHandler.renderBoards(player1, player2);
-};
+}
 
 function hitShip(boardID, x, y, p1, p2) {
   console.log(`hit ${x}, ${y} on board ${boardID}`);

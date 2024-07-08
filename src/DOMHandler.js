@@ -18,13 +18,13 @@ function renderBoards(player1, player2) {
       ) {
         box1.classList.add("unhit");
       } else if (player1.gameBoard.board[i][j] === "a") {
-        box1.innerHTML = "a";
+        // box1.innerHTML = "a";
         box1.classList.add("adjacent");
       } else if (player1.gameBoard.board[i][j] === "o") {
-        box1.innerHTML = "o";
+        // box1.innerHTML = "o";
         box1.classList.add("missed");
       } else if (player1.gameBoard.board[i][j] === "x") {
-        box1.innerHTML = "x";
+        // box1.innerHTML = "x";
         box1.classList.add("hit");
       }
       if (
@@ -33,13 +33,13 @@ function renderBoards(player1, player2) {
       ) {
         box2.classList.add("unhit");
       } else if (player2.gameBoard.board[i][j] === "a") {
-        box2.innerHTML = "a";
+        // box2.innerHTML = "a";
         box2.classList.add("adjacent");
       } else if (player2.gameBoard.board[i][j] === "o") {
-        box2.innerHTML = "o";
+        // box2.innerHTML = "o";
         box2.classList.add("missed");
       } else if (player2.gameBoard.board[i][j] === "x") {
-        box2.innerHTML = "x";
+        // box2.innerHTML = "x";
         box2.classList.add("hit");
       }
     }

@@ -41,17 +41,23 @@ p {
   padding: 0;
 }
 
+.turnInfo {
+  font-size: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
 .playerInfo {
   font-size: 2rem;
 }
 
 .gameBoard {
-  aspect-ratio: 1/1;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+  aspect-ratio: 1 / 1;
   width: 100%;
-  border: 5px solid #006800;
+  border: 3px solid #006800;
   border-radius: 10px;
 }
 
@@ -64,7 +70,12 @@ p {
   font-size: 2rem;
 }
 
-.box:hover {
+.adjacent {
+  background-color: gray;
+  user-select: none;
+}
+
+.unhit:hover {
   background-color: #006800;
 }
 
@@ -74,4 +85,5 @@ p {
 
 .hit {
   background-color: #ff0000;
+  user-select: none;
 }
