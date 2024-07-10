@@ -10,13 +10,12 @@ function renderBoards(player1, player2) {
       const box2 = document.getElementById(`box2-${i}${j}`);
       box1.innerHTML = "";
       box2.innerHTML = "";
-      box1.classList.remove("unhit", "missed", "hit", "adjacent");
+      box1.classList.remove("playerUnhit", "missed", "hit", "adjacent");
       box2.classList.remove("unhit", "missed", "hit", "adjacent");
-      if (
-        player1.gameBoard.board[i][j] === undefined ||
-        typeof player1.gameBoard.board[i][j] === "object"
-      ) {
-        box1.classList.add("unhit");
+      if (player1.gameBoard.board[i][j] === undefined) {
+        box1.classList.add("PlayerUnhit");
+      } else if (typeof player1.gameBoard.board[i][j] === "object") {
+        box1.classList.add("visible");
       } else if (player1.gameBoard.board[i][j] === "a") {
         // box1.innerHTML = "a";
         box1.classList.add("adjacent");

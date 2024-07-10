@@ -83,17 +83,18 @@ function gameBoardCreator() {
       // This function should take in coordinates and mark the board accordingly
       // hitting an already hit part of the ship should pass the func without executing anything
       // This takes care of illegal clicks.
+      // returns two bools as follows:
+      // [validHit, hitShip]
       if (
-        // no need to do anything here.
         board[yCoord][xCoord] === "o" ||
         board[yCoord][xCoord] === "x" ||
         board[yCoord][xCoord] === "a"
       ) {
-        return false;
+        return [false, false];
       }
       if (board[yCoord][xCoord] === undefined) {
         board[yCoord][xCoord] = "o";
-        return true;
+        return [true, false];
       }
       if (typeof board[yCoord][xCoord] === "object") {
         board[yCoord][xCoord].hit();
@@ -109,6 +110,7 @@ function gameBoardCreator() {
         }
         this.checkIfAllSunk();
         board[yCoord][xCoord] = "x";
+        return [true, true];
       }
       return false; // should never get here. This is just to shut up eslint.
     },
@@ -202,8 +204,26 @@ function playerCreator(type = "CPU") {
   // type is either "CPU" or "human". Let's just use CPU for default. don't know lol
   return {
     type,
+    currentTurn: false,
     gameBoard: gameBoardCreator(),
+    toggleTurn() {
+      this.currentTurn = !this.currentTurn;
+    },
   };
 }
 
-module.exports = { shipCreator, gameBoardCreator, playerCreator };
+function CPUAttack() {
+  // This function will be called by the game loop when it's the CPU's turn.
+  // It will return the coordinates of the attack.
+  // It will be a random attack for now.
+  const x = Math.floor(Math.random() * 10);
+  const y = Math.floor(Math.random() * 10);
+  return [x, y];
+}
+
+module.exports = {
+  shipCreator,
+  gameBoardCreator,
+  playerCreator,
+  CPUAttack,
+};
