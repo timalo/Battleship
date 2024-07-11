@@ -56,7 +56,6 @@ function init(player1, player2) {
   player1.toggleTurn(); // init the game by giving the turn to p1
 }
 
-// TODO: This should maybe be in a separate file?
 function hitShip(boardID, x, y, p1, p2) {
   console.log(`hit ${x}, ${y} on board ${boardID}`);
   if (boardID === 2 && p1.currentTurn === true) {
@@ -78,13 +77,11 @@ function hitShip(boardID, x, y, p1, p2) {
     console.log("Not your turn!");
   } else if (p2.currentTurn === true) {
     const hitValidity = p1.gameBoard.receiveAttack(x, y);
-    console.log(hitValidity);
     if (hitValidity[0] === false) {
-      console.log("illegal move from CPU. Just try another one.");
+      console.log("illegal move from CPU. Trying another one...");
       const attackCoords = script.CPUAttack();
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
-    }
-    if (hitValidity[1] === false) {
+    } else if (hitValidity[1] === false) {
       console.log("miss! Toggling turn back to player");
       p1.toggleTurn();
       p2.toggleTurn();
