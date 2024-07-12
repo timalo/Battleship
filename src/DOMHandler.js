@@ -76,14 +76,14 @@ function hitShip(boardID, x, y, p1, p2) {
     if (hitValidity[0] === false) {
       console.log("illegal move.");
     } else if (hitValidity[0] === true && hitValidity[1] === false) {
-      console.log("miss! Toggling turn to CPU...");
+      // console.log("miss! Toggling turn to CPU...");
       p1.toggleTurn();
       p2.toggleTurn();
       const attackCoords = script.CPUAttack();
       console.log(`CPU attacks ${attackCoords[0]}, ${attackCoords[1]}`);
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
     } else if (hitValidity[0] === true && hitValidity[1] === true) {
-      console.log("hit! Turn continues.");
+      // console.log("hit! Turn continues.");
       const isGameOver = p2.gameBoard.checkIfAllSunk();
       console.log("isGameOver: ", isGameOver);
       if (isGameOver) {
@@ -99,11 +99,11 @@ function hitShip(boardID, x, y, p1, p2) {
       const attackCoords = script.CPUAttack();
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
     } else if (hitValidity[1] === false) {
-      console.log("miss! Toggling turn back to player");
+      // console.log("miss! Toggling turn back to player");
       p1.toggleTurn();
       p2.toggleTurn();
     } else if (hitValidity[0] === true && hitValidity[1] === true) {
-      console.log("hit! CPU turn continues.");
+      // console.log("hit! CPU turn continues.");
       const isGameOver = p1.gameBoard.checkIfAllSunk();
       if (isGameOver) {
         gameOver(2);
@@ -118,7 +118,11 @@ function hitShip(boardID, x, y, p1, p2) {
 
 function gameOver(playerID) {
   console.log(`Player ${playerID} wins!`);
-  // disableUI(); // Make clicking the boards impossible after the game.
+  disableUI(); // Make clicking the boards impossible after the game.
+}
+
+function disableUI() {
+  // TODO: lol do something here.
 }
 
 module.exports = { renderBoards, init }; // eslint complains about this when exporting just one function. There are more funcs coming
