@@ -84,6 +84,11 @@ function hitShip(boardID, x, y, p1, p2) {
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
     } else if (hitValidity[0] === true && hitValidity[1] === true) {
       console.log("hit! Turn continues.");
+      const isGameOver = p2.gameBoard.checkIfAllSunk();
+      console.log("isGameOver: ", isGameOver);
+      if (isGameOver) {
+        gameOver(1);
+      }
     }
   } else if (boardID === 2) {
     console.log("Not your turn!");
@@ -99,12 +104,21 @@ function hitShip(boardID, x, y, p1, p2) {
       p2.toggleTurn();
     } else if (hitValidity[0] === true && hitValidity[1] === true) {
       console.log("hit! CPU turn continues.");
+      const isGameOver = p1.gameBoard.checkIfAllSunk();
+      if (isGameOver) {
+        gameOver(2);
+      }
       const attackCoords = script.CPUAttack();
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
     }
   }
 
   renderBoards(p1, p2);
+}
+
+function gameOver(playerID) {
+  console.log(`Player ${playerID} wins!`);
+  // disableUI(); // Make clicking the boards impossible after the game.
 }
 
 module.exports = { renderBoards, init }; // eslint complains about this when exporting just one function. There are more funcs coming

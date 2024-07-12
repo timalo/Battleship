@@ -108,7 +108,6 @@ function gameBoardCreator() {
             board[yCoord][xCoord].direction,
           );
         }
-        this.checkIfAllSunk();
         board[yCoord][xCoord] = "x";
         return [true, true];
       }
