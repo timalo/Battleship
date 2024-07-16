@@ -68,7 +68,7 @@ function init(player1, player2) {
   player1.toggleTurn(); // init the game by giving the turn to p1
 }
 
-function hitShip(boardID, x, y, p1, p2) {
+async function hitShip(boardID, x, y, p1, p2) {
   console.log(`hit ${x}, ${y} on board ${boardID}`);
   if (boardID === 2 && p1.currentTurn === true) {
     const hitValidity = p2.gameBoard.receiveAttack(x, y);
@@ -122,7 +122,22 @@ function gameOver(playerID) {
 }
 
 function disableUI() {
-  // TODO: lol do something here.
+  console.log("disabling UI...");
+  const boxes = document.getElementsByClassName("box");
+  for (let i = 0; i < boxes.length; i += 1) {
+    boxes[i].classList.add("disabled");
+  }
 }
+
+/* function newGame(p1, p2) {
+  // Starts a new game. For now just use the premade ship positions.
+  console.log("Starting new game...");
+  const board1 = document.getElementsByClassName("board1")[0];
+  const board2 = document.getElementsByClassName("board2")[0];
+  board1.innerHTML = "";
+  board2.innerHTML = "";
+  init(p1, p2);
+  renderBoards(p1, p2);
+} */
 
 module.exports = { renderBoards, init }; // eslint complains about this when exporting just one function. There are more funcs coming

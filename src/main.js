@@ -32,4 +32,9 @@ window.onload = () => {
   player2.gameBoard.placeShip(1, 0, 2, "x");
   DOMHandler.init(player1, player2);
   DOMHandler.renderBoards(player1, player2);
+
+  /*   const newGameBtn = document.getElementsByClassName("newGameButton")[0];
+  newGameBtn.addEventListener("click", () => {
+    DOMHandler.newGame(player1, player2);
+  }); */
 };
