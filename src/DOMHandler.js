@@ -87,7 +87,7 @@ function hitShip(boardID, x, y, p1, p2) {
       const isGameOver = p2.gameBoard.checkIfAllSunk();
       console.log("isGameOver: ", isGameOver);
       if (isGameOver) {
-        gameOver(1);
+        gameOver(1); // player win
       }
     }
   } else if (boardID === 2) {
@@ -106,7 +106,7 @@ function hitShip(boardID, x, y, p1, p2) {
       // console.log("hit! CPU turn continues.");
       const isGameOver = p1.gameBoard.checkIfAllSunk();
       if (isGameOver) {
-        gameOver(2);
+        gameOver(2); // CPU win
       }
       const attackCoords = script.CPUAttack();
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
