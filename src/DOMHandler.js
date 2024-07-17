@@ -95,7 +95,7 @@ async function hitShip(boardID, x, y, p1, p2) {
   } else if (p2.currentTurn === true) {
     const hitValidity = p1.gameBoard.receiveAttack(x, y);
     if (hitValidity[0] === false) {
-      console.log("illegal move from CPU. Trying another one...");
+      // console.log("illegal move from CPU. Trying another one...");
       const attackCoords = script.CPUAttack();
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
     } else if (hitValidity[1] === false) {
@@ -107,9 +107,10 @@ async function hitShip(boardID, x, y, p1, p2) {
       const isGameOver = p1.gameBoard.checkIfAllSunk();
       if (isGameOver) {
         gameOver(2); // CPU win
+      } else {
+        const attackCoords = script.CPUAttack();
+        hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
       }
-      const attackCoords = script.CPUAttack();
-      hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
     }
   }
 
