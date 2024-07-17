@@ -212,9 +212,6 @@ function playerCreator(type = "CPU") {
 }
 
 function CPUAttack() {
-  // This function will be called by the game loop when it's the CPU's turn.
-  // It will return the coordinates of the attack.
-  // It will be a random attack for now.
   const x = Math.floor(Math.random() * 10);
   const y = Math.floor(Math.random() * 10);
   return [x, y];

@@ -129,15 +129,45 @@ function disableUI() {
   }
 }
 
-/* function newGame(p1, p2) {
+function newGame() {
   // Starts a new game. For now just use the premade ship positions.
   console.log("Starting new game...");
+  const player1 = script.playerCreator("human");
+  const player2 = script.playerCreator();
+  clearHTMLBoards();
+  placeShips(player1, player2);
+  init(player1, player2);
+  renderBoards(player1, player2);
+}
+
+function placeShips(player1, player2) {
+  player1.gameBoard.placeShip(4, 1, 4, "y"); // ends in 1, 8
+  player1.gameBoard.placeShip(3, 7, 2, "x"); // 9, 2
+  player1.gameBoard.placeShip(3, 3, 1, "y"); // 3, 3
+  player1.gameBoard.placeShip(2, 4, 5, "x"); // 5, 5
+  player1.gameBoard.placeShip(2, 6, 8, "x"); // 7, 8
+  player1.gameBoard.placeShip(2, 1, 9, "x"); // 2, 9
+  player1.gameBoard.placeShip(1, 4, 7, "x");
+  player1.gameBoard.placeShip(1, 9, 8, "y");
+  player1.gameBoard.placeShip(1, 0, 0, "x");
+  player1.gameBoard.placeShip(1, 0, 2, "x");
+  player2.gameBoard.placeShip(4, 1, 4, "y"); // ends in 1, 8
+  player2.gameBoard.placeShip(3, 7, 2, "x"); // 9, 2
+  player2.gameBoard.placeShip(3, 3, 1, "y"); // 3, 3
+  player2.gameBoard.placeShip(2, 4, 5, "x"); // 5, 5
+  player2.gameBoard.placeShip(2, 6, 8, "x"); // 7, 8
+  player2.gameBoard.placeShip(2, 1, 9, "x"); // 2, 9
+  player2.gameBoard.placeShip(1, 4, 7, "x");
+  player2.gameBoard.placeShip(1, 9, 8, "y");
+  player2.gameBoard.placeShip(1, 0, 0, "x");
+  player2.gameBoard.placeShip(1, 0, 2, "x");
+}
+
+function clearHTMLBoards() {
   const board1 = document.getElementsByClassName("board1")[0];
   const board2 = document.getElementsByClassName("board2")[0];
   board1.innerHTML = "";
   board2.innerHTML = "";
-  init(p1, p2);
-  renderBoards(p1, p2);
-} */
+}
 
-module.exports = { renderBoards, init }; // eslint complains about this when exporting just one function. There are more funcs coming
+module.exports = { renderBoards, init, newGame, placeShips };
