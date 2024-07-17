@@ -68,7 +68,7 @@ function init(player1, player2) {
   player1.toggleTurn(); // init the game by giving the turn to p1
 }
 
-async function hitShip(boardID, x, y, p1, p2) {
+function hitShip(boardID, x, y, p1, p2) {
   console.log(`hit ${x}, ${y} on board ${boardID}`);
   if (boardID === 2 && p1.currentTurn === true) {
     const hitValidity = p2.gameBoard.receiveAttack(x, y);
