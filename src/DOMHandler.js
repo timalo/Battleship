@@ -2,8 +2,6 @@
 const script = require("./scripts");
 
 function renderBoards(player1, player2) {
-  // In addition to handling classes etc. We could also add images to hit/missed boxes.
-  // Doing it with just background colors for now
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {
       const box1 = document.getElementById(`box1-${i}${j}`);
@@ -113,7 +111,6 @@ function hitShip(boardID, x, y, p1, p2) {
       }
     }
   }
-
   renderBoards(p1, p2);
 }
 
@@ -142,6 +139,7 @@ function newGame() {
 }
 
 function placeShips(player1, player2) {
+  // just using premade positions for now.
   player1.gameBoard.placeShip(4, 1, 4, "y"); // ends in 1, 8
   player1.gameBoard.placeShip(3, 7, 2, "x"); // 9, 2
   player1.gameBoard.placeShip(3, 3, 1, "y"); // 3, 3
