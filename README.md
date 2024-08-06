@@ -1,7 +1,7 @@
 # Battleship Game
 
-This is a simple Battleship game made as part of The Odin Project.
+This is a simple Battleship game made as part of [The Odin Project](https://www.theodinproject.com/).
 Built using HTML, CSS and vanilla JS
 
 ## Play
-You can try the game here: link here
+You can try the game here: __link here__
