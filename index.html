@@ -7,17 +7,28 @@
   <script defer src="main.js"></script></head>
   <body>
     <div class="content">
-      <div class="headerDiv"></div>
-      <div class="gameDiv">
-        <div class="boardArea p2Area">
+      <div class="buttonDiv">
+        <button class="newGameButton" disabled>New Game</button>
+        <button class="shuffleButton">Shuffle</button>
+      </div>
+      <div class="infoDiv">
+        <div class="playerInfo info">You can start the game by attacking the enemy board, or shuffle your own ships with the shuffle button.</div>
+      </div>
+        <div class="gameDiv">
+        <div class="boardArea p1Area">
           <h1 class="p1Header playerInfo">Player 1</h1>
+          <h2 class="p1Turn turnInfo" hidden>Your turn!</h1>
           <div class="gameBoard board1"></div>
+          <div class="shipsLeftDiv shipsLeftPlayer">Ships left: <span class="shipNum">10</span></div>
         </div>
         <div class="boardArea p2Area">
           <h1 class="p2Header playerInfo">Player 2</h1>
+          <h2 class="p2Turn turnInfo" hidden>Your turn</h1>
           <div class="gameBoard board2"></div>
+          <div class="shipsLeftDiv shipsLeftEnemy">Ships left: <span class="shipNum">10</span></div>
         </div>
       </div>
+      
     </div>
     <script src="main.js"></script>
   </body>
