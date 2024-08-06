@@ -116,6 +116,17 @@ p {
   justify-content: center;
 }
 
+.infoDiv {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: green;
+}
+
 button {
   margin: 0 2%;
   font-size: 1.5rem;
@@ -124,4 +135,23 @@ button {
 .blocker {
   width: 100%;
   height: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  width: 100%;
+  height: 50%;
+}
+
+.enemyInfo {
+  color: red;
+}
+
+.shipsLeftDiv {
+  font-size: 2rem;
+  color: #b77777;
 }

@@ -24,6 +24,7 @@ function gameBoardCreator() {
     .map(() => Array(10).fill(undefined));
   return {
     board,
+    shipsleft: 10,
     placeShip(shipSize, xCoord, yCoord, direction) {
       // ship direction is either "x" or "y"
       if (
@@ -57,7 +58,7 @@ function gameBoardCreator() {
                   throw new Error("Ship is next to another ship.");
                 } else if (
                   direction === "y" &&
-                  board[yCoord + j][xCoord + k + i] !== undefined &&
+                  board[yCoord + j + i][xCoord + k] !== undefined &&
                   typeof board[yCoord + j + i][xCoord + k] === "object"
                 ) {
                   throw new Error("Ship is next to another ship.");
@@ -101,6 +102,8 @@ function gameBoardCreator() {
         this.markHitAdjacents(xCoord, yCoord);
         if (board[yCoord][xCoord].isSunk === true) {
           // Mark all the adjacents for ship if it was sunk
+          // Also reduce shipsLeft by one.
+          this.shipsleft -= 1;
           this.markAllAdjacents(
             board[yCoord][xCoord].xStart,
             board[yCoord][xCoord].yStart,

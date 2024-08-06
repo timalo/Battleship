@@ -41,6 +41,11 @@ function renderBoards(player1, player2) {
       }
     }
   }
+  // Update ships left text
+  const shipsLeftPlayer = document.getElementsByClassName("shipsLeftPlayer")[0];
+  const shipsLeftEnemy = document.getElementsByClassName("shipsLeftEnemy")[0];
+  shipsLeftPlayer.innerHTML = `Ships left: ${player1.gameBoard.shipsleft}`;
+  shipsLeftEnemy.innerHTML = `Ships left: ${player2.gameBoard.shipsleft}`;
 }
 
 function init(player1, player2) {
@@ -67,11 +72,19 @@ function init(player1, player2) {
 }
 
 function hitShip(boardID, x, y, p1, p2) {
+  // Disable shuffle button, enable newGameBtn and remove info text after first hit.
+  const shuffleBtn = document.getElementsByClassName("shuffleButton")[0];
+  shuffleBtn.disabled = true;
+  const newGameBtn = document.getElementsByClassName("newGameButton")[0];
+  newGameBtn.disabled = false;
+  const playerInfo = document.getElementsByClassName("playerInfo")[0];
+  playerInfo.innerHTML = "";
   console.log(`hit ${x}, ${y} on board ${boardID}`);
   if (boardID === 2 && p1.currentTurn === true) {
     const hitValidity = p2.gameBoard.receiveAttack(x, y);
     console.log(hitValidity);
     if (hitValidity[0] === false) {
+      playerInfo.innerHTML = "You can't attack there!";
       console.log("illegal move.");
     } else if (hitValidity[0] === true && hitValidity[1] === false) {
       // console.log("miss! Toggling turn to CPU...");
@@ -80,8 +93,10 @@ function hitShip(boardID, x, y, p1, p2) {
       const attackCoords = script.CPUAttack();
       console.log(`CPU attacks ${attackCoords[0]}, ${attackCoords[1]}`);
       hitShip(1, attackCoords[0], attackCoords[1], p1, p2);
+      playerInfo.innerHTML = "You missed!";
     } else if (hitValidity[0] === true && hitValidity[1] === true) {
       // console.log("hit! Turn continues.");
+      playerInfo.innerHTML = "You hit an enemy ship! Make another shot.";
       const isGameOver = p2.gameBoard.checkIfAllSunk();
       console.log("isGameOver: ", isGameOver);
       if (isGameOver) {
@@ -116,6 +131,8 @@ function hitShip(boardID, x, y, p1, p2) {
 
 function gameOver(playerID) {
   console.log(`Player ${playerID} wins!`);
+  const playerInfo = document.getElementsByClassName("playerInfo")[0];
+  playerInfo.innerHTML = `Player ${playerID} wins!`;
   disableUI(); // Make clicking the boards impossible after the game.
 }
 
@@ -128,38 +145,50 @@ function disableUI() {
 }
 
 function newGame() {
-  // Starts a new game. For now just use the premade ship positions.
   console.log("Starting new game...");
+  const shuffleBtn = document.getElementsByClassName("shuffleButton")[0];
+  shuffleBtn.disabled = false;
   const player1 = script.playerCreator("human");
   const player2 = script.playerCreator();
   clearHTMLBoards();
-  placeShips(player1, player2);
+  placeShips(player1);
+  placeShips(player2);
   init(player1, player2);
   renderBoards(player1, player2);
+  const newGameBtn = document.getElementsByClassName("newGameButton")[0];
+  newGameBtn.disabled = true;
+  const playerInfo = document.getElementsByClassName("playerInfo")[0];
+  playerInfo.innerHTML =
+    "You can start the game by attacking the enemy board, or shuffle your own ships with the shuffle button.";
 }
 
-function placeShips(player1, player2) {
-  // just using premade positions for now.
-  player1.gameBoard.placeShip(4, 1, 4, "y"); // ends in 1, 8
-  player1.gameBoard.placeShip(3, 7, 2, "x"); // 9, 2
-  player1.gameBoard.placeShip(3, 3, 1, "y"); // 3, 3
-  player1.gameBoard.placeShip(2, 4, 5, "x"); // 5, 5
-  player1.gameBoard.placeShip(2, 6, 8, "x"); // 7, 8
-  player1.gameBoard.placeShip(2, 1, 9, "x"); // 2, 9
-  player1.gameBoard.placeShip(1, 4, 7, "x");
-  player1.gameBoard.placeShip(1, 9, 8, "y");
-  player1.gameBoard.placeShip(1, 0, 0, "x");
-  player1.gameBoard.placeShip(1, 0, 2, "x");
-  player2.gameBoard.placeShip(4, 1, 4, "y"); // ends in 1, 8
-  player2.gameBoard.placeShip(3, 7, 2, "x"); // 9, 2
-  player2.gameBoard.placeShip(3, 3, 1, "y"); // 3, 3
-  player2.gameBoard.placeShip(2, 4, 5, "x"); // 5, 5
-  player2.gameBoard.placeShip(2, 6, 8, "x"); // 7, 8
-  player2.gameBoard.placeShip(2, 1, 9, "x"); // 2, 9
-  player2.gameBoard.placeShip(1, 4, 7, "x");
-  player2.gameBoard.placeShip(1, 9, 8, "y");
-  player2.gameBoard.placeShip(1, 0, 0, "x");
-  player2.gameBoard.placeShip(1, 0, 2, "x");
+function placeShips(player) {
+  // call random placement function from here until all the ships are placed.
+  const shipsLengths = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+  while (shipsLengths.length > 0) {
+    const validShip = placeRandomShip(
+      player,
+      shipsLengths[shipsLengths.length - 1],
+    );
+    if (validShip) {
+      shipsLengths.pop();
+    }
+  }
+}
+
+function placeRandomShip(player, length) {
+  // place a ship at a random location
+  const x = Math.floor(Math.random() * 10);
+  const y = Math.floor(Math.random() * 10);
+  const direction = Math.random() < 0.5 ? "x" : "y";
+  try {
+    player.gameBoard.placeShip(length, x, y, direction);
+    // console.log("Placed ship of length ", length, "at ", x, y, direction);
+    return true;
+  } catch (e) {
+    // console.log(e);
+    return false;
+  }
 }
 
 function clearHTMLBoards() {
@@ -169,4 +198,4 @@ function clearHTMLBoards() {
   board2.innerHTML = "";
 }
 
-module.exports = { renderBoards, init, newGame, placeShips };
+module.exports = { renderBoards, init, newGame, placeShips, clearHTMLBoards };
